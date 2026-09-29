@@ -1,0 +1,5 @@
+'use client'
+import { useState } from 'react'
+import { createClient } from '@/lib/supabase/client'
+
+export default function Login(){const [email,setEmail]=useState('');const [password,setPassword]=useState('');const [error,setError]=useState('');const submit=async(e:React.FormEvent)=>{e.preventDefault();const {error}=await createClient().auth.signInWithPassword({email,password});if(error)setError(error.message);else window.location.href='/'};return <main className="content"><div className="hero" style={{maxWidth:480,margin:'60px auto'}}><h1>Acceso al CRM</h1><form onSubmit={submit}><p><label>Correo<br/><input required value={email} onChange={e=>setEmail(e.target.value)} style={{width:'100%',padding:10}}/></label></p><p><label>Contraseña<br/><input required type="password" value={password} onChange={e=>setPassword(e.target.value)} style={{width:'100%',padding:10}}/></label></p>{error&&<p style={{color:'#b3261e'}}>{error}</p>}<button className="button">Entrar</button></form></div></main>}
